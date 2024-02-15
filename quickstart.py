@@ -1,17 +1,14 @@
 import os.path
-
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+import json
 import base64
 from email.message import EmailMessage
 import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-import pickle
-import json
+
 
 # If modifying these scopes, delete the file credentials.json.
 
@@ -70,121 +67,59 @@ def main():
 
 #######################################################################################################
 
+def send_message(service, user_id, message):
+    try:
+        message = service.users().drafts().send(userId=user_id, body=message).execute()
+        print('Message Id: %s' % message['id'])
+        return message
+    except Exception as e:
+        print('An error occurred: %s' % e)
+        return None
+def gmail_send_message(creds, contact_list):
+  """Create and send an email message
+  Print the returned  message id
+  Returns: Message object, including message id
+
+  Load pre-authorized user credentials from the environment.
+  TODO(developer) - See https://developers.google.com/identity
+  for guides on implementing OAuth2 for the application.
+  """
+  # creds, _ = google.auth.default()
+
+  try:
+    service = build("gmail", "v1", credentials=creds)
+    message = EmailMessage()
+
+    message.set_content("This is automated draft mail")
+
+    # message["To"] = "syltester616@gmail.com"
+    message["Bcc"] = contact_list
+    message["From"] = "syltester616@gmail.com"
+    message["Subject"] = "Automated draft"
+
+    # encoded message
+    encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
+
+    create_message = {"raw": encoded_message}
+    # pylint: disable=E1101
+    send_message = (
+        service.users()
+        .messages()
+        .send(userId="me", body=create_message)
+        .execute()
+    )
+    print(f'Message Id: {send_message["id"]}')
+  except HttpError as error:
+    print(f"An error occurred: {error}")
+    send_message = None
+  return send_message
+
+
+# list of emails that are recieving notifications
 gmail_list = ['syltester616@gmail.com', 'sylvester.broich@gmail.com', '25sbroich@cpsd.us']
 
 messages = []
 
-
-# def auto_emailer( p_config_filename, p_gc_name, p_send_email=False,
-#                                p_teachercc='', p_message='', p_scholar_guardians=''):
-
-
-def gmail_create_draft(creds):
-    print('hello')
-    #   """Create and insert a draft email.
-    #    Print the returned draft's message and id.
-    #    Returns: Draft object, including draft id and message meta data.
-
-    #   Load pre-authorized user credentials from the environment.
-    #   TODO(developer) - See https://developers.google.com/identity
-    #   for guides on implementing OAuth2 for the application.
-    #   """
-
-    try:
-        # create gmail api client
-        service = build("gmail", "v1", credentials=creds)
-
-        message = EmailMessage()
-
-        message.set_content("This is automated draft mail")
-
-        message["To"] = 'sylvester.broich@gmail.com'
-        message["From"] = 'syltester616@gmail.com'
-        # message["From"] = 'ewu@cpsd.us'
-
-        message["Subject"] = "Automated draft"
-
-        # encoded message
-        encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
-
-        create_message = {"message": {"raw": encoded_message}}
-        # pylint: disable=E1101
-        draft = (
-            service.users()
-            .drafts()
-            .create(userId="me", body=create_message)
-            .execute()
-        )
-
-        print(f'Draft id: {draft["id"]}\nDraft message: {draft["message"]}')
-
-    except HttpError as error:
-        print(f"An error occurred: {error}")
-        draft = None
-    return draft
-
-
-def create_message(sender, to, subject, message_text):
-    message = EmailMessage()
-    message.set_content('word')
-    message['to'] = 'sylvester.broich@gmail.com'
-    message['from'] = 'syltester616@gmail.com'
-    message['subject'] = subject
-    raw_message = base64.urlsafe_b64encode(message.as_string().encode("utf-8"))
-    return json.dumps
-
-
-# def gmail_create_draft(service, user_id, message_body):
-#   try:
-#     message = {'message': message_body}
-#     draft = service.users().drafts().create(userId=user_id, body=message).execute()
-#     print("Draft id: %s\nDraft message: %s" % (draft['id'], draft['message']))
-#     return draft
-#   except Exception as e:
-#     print('An error occurred: %s' % e)
-#     return None
-
-# def send_message(service, user_id, message):
-#   try:
-#     message = service.users().messages().send(userId=user_id, body=message).execute()
-#     print('Message Id: %s' % message['id'])
-#     return message
-#   except Exception as e:
-#     print('An error occurred: %s' % e)
-#     return None
-
-
 if __name__ == "__main__":
-    creds = main()
-    gmail_create_draft(creds)
+  gmail_send_message(main(), gmail_list)
 
-    # Debug info here
-    # if email_address in p_scholar_guardians.keys():
-    #     print("Email address to send to: " + email_address + ',' +
-    #           p_scholar_guardians[email_address])
-    # else:
-    #     print("Email address to send to: " + email_address)
-    # if p_teachercc:
-    #     print("teacher cc: " + str(p_teachercc))
-    # else:
-    #     print("no teacher cc")
-    # print("This is the message that will be/would have been sent:")
-    # print(message[key])
-    # msg_text = message[key]
-
-    # if p_send_email:
-    #     email_message = MIMEMultipart()
-    #     if email_address in p_scholar_guardians.keys():
-    #         email_message['to'] = email_address + ',' + p_scholar_guardians[email_address]
-    #     else:
-    #         email_message['to'] = email_address
-    #     if p_teachercc:
-    #         email_message['cc'] = p_teachercc
-    #     email_message['subject'] = p_gc_name + '  assignments report'
-    #     email_message.attach(MIMEText(msg_text, 'plain'))
-    #     raw_string = base64.urlsafe_b64encode(email_message.as_bytes()).decode()
-    #     send_message = service_gmail.users().messages().send(userId='me', body={'raw': raw_string}).execute()
-    #     print(send_message)
-    # else:
-    #     print("send_message was sent to 0.  Emails were not sent.\n"
-    #           "To send emails, switch send_email to 1 in this file: " + str(p_config_filename) + "\n\n")
