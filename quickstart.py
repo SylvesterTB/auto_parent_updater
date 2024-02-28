@@ -75,7 +75,7 @@ def send_message(service, user_id, message):
     except Exception as e:
         print('An error occurred: %s' % e)
         return None
-def gmail_send_message(creds, contact_list):
+def gmail_send_message(creds, contact_list, message_content):
   """Create and send an email message
   Print the returned  message id
   Returns: Message object, including message id
@@ -90,12 +90,12 @@ def gmail_send_message(creds, contact_list):
     service = build("gmail", "v1", credentials=creds)
     message = EmailMessage()
 
-    message.set_content("This is automated draft mail")
+    message.set_content("Hello parents and caregivers, this an update relating to your students Computer Science 2 course. In the past 2 weeks we " + message_content)
 
     # message["To"] = "syltester616@gmail.com"
     message["Bcc"] = contact_list
     message["From"] = "syltester616@gmail.com"
-    message["Subject"] = "Automated draft"
+    message["Subject"] =  "Bi-weekly CS2 update"
 
     # encoded message
     encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
@@ -114,12 +114,32 @@ def gmail_send_message(creds, contact_list):
     send_message = None
   return send_message
 
+# gets emails in emails.txt
+def reFormat():
+    with open("emails.txt") as file:
+        lines = file.readlines()
+        for i in range(3):
+            lines[i] = lines[i].strip()
+            # lines.replace(i, i.strip())
+        return lines
+
+
+def schedule(p_weeks):
+    with open("schedule.txt") as file:
+        lines = file.readlines()
+        schedule_content = ""
+        line = lines[p_weeks]
+        last_char = len(line) - 1
+        schedule_content = line[11:last_char]
+    return schedule_content
+
 
 # list of emails that are recieving notifications
-gmail_list = ['syltester616@gmail.com', 'sylvester.broich@gmail.com', '25sbroich@cpsd.us']
+gmail_list = reFormat()
 
 messages = []
 
+message_content = schedule(5)
 if __name__ == "__main__":
-  gmail_send_message(main(), gmail_list)
+  gmail_send_message(main(), gmail_list, message_content)
 
