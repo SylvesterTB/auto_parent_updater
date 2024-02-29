@@ -8,6 +8,8 @@ from email.message import EmailMessage
 import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from sheets import sheet
+
 
 
 # If modifying these scopes, delete the file credentials.json.
@@ -124,22 +126,14 @@ def reFormat():
         return lines
 
 
-def schedule(p_weeks):
-    with open("schedule.txt") as file:
-        lines = file.readlines()
-        schedule_content = ""
-        line = lines[p_weeks]
-        last_char = len(line) - 1
-        schedule_content = line[11:last_char]
-    return schedule_content
-
 
 # list of emails that are recieving notifications
 gmail_list = reFormat()
 
 messages = []
 
-message_content = schedule(5)
+message_content = sheet()
 if __name__ == "__main__":
   gmail_send_message(main(), gmail_list, message_content)
+
 
