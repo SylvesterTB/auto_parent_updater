@@ -36,9 +36,7 @@ def sheet():
         # Save the credentials for the next run
         with open("token1.json", "w") as token:
             token.write(creds.to_json())
-    sheet_info = {}
-    dates = []
-    values = []
+    potential_message = []
     try:
         service = build("sheets", "v4", credentials=creds)
 
@@ -53,21 +51,17 @@ def sheet():
 
         if not values:
             print("No data found.")
+            return
 
         print("Name, Major:")
-        for row in values:
-            # Print columns A and E, which correspond to indices 0 and 4.
-            dates.append({row[0]})
-            values.append({row[3]})
-            # sheet_info = {f"{row[0]}, {row[3]}"}
-        for date in dates:
-            for value in values:
-                sheet_info[date] = value
-                values.remove(value)
-                break
+        for i in range(1,4):
+            potential_message.append(values[i][3])
+        return potential_message
+
+
     except HttpError as err:
         print(err)
-    print(sheet_info)
+    # print (potential_message)
 
 if __name__ == "__main__":
     sheet()

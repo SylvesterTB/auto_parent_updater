@@ -91,8 +91,8 @@ def gmail_send_message(creds, contact_list, message_content):
   try:
     service = build("gmail", "v1", credentials=creds)
     message = EmailMessage()
-
-    message.set_content("Hello parents and caregivers, this an update relating to your students Computer Science 2 course. In the past 2 weeks we " + message_content)
+    words1 = (', '.join(sheet()))
+    message.set_content("Hello parents and caregivers, this an update relating to your students Computer Science 2 course. In the past 2 weeks we did: " + words1)
 
     # message["To"] = "syltester616@gmail.com"
     message["Bcc"] = contact_list
@@ -131,7 +131,6 @@ def reFormat():
 gmail_list = reFormat()
 
 messages = []
-
 message_content = sheet()
 if __name__ == "__main__":
   gmail_send_message(main(), gmail_list, message_content)
