@@ -31,3 +31,5 @@ for i in range(len(contact_list)):
       to = contact_list[i]
     )
     print(message.sid)
+
+    # commit fix? a
