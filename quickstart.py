@@ -9,6 +9,7 @@ import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from sheets import sheet, assignment_filter
+from Twilio_sms import Twilio
 
 # If modifying these scopes, delete the file credentials.json.
 
@@ -133,6 +134,7 @@ gmail_list = reFormat()
 
 
 # this list currently contains a set of example filters
+# Every item in remove_list is removed form the message
 remove_list = ["Headers", "Paragraphs", "Ordered lists", "Unordered lists", "Google classroom setup",
                "CS2 Schedule + Calendar", "CRLS Bell Schedule + Year in review", "Lunch times", "Course contract",
                "Day 1 survey", "Course contract Acknowledgement", "HTML2", "Line break",
@@ -140,6 +142,7 @@ remove_list = ["Headers", "Paragraphs", "Ordered lists", "Unordered lists", "Goo
                "em", "How to look something up", "Boilerplate", "Emojis", "Background color", "Font size", "Font color",
                "Font family", "CSS1"]
 
+# Every key in replaced_dict is replaced with its value
 replace_dict = {"Go over autograding HTML1": "Learning how to autograde!", "HTML1": "we learned hmtl!",
                 "Introductions (names)": "Introductions, Icebreakers, Logistics",
                 "blockquote": "Learned How to Autograde and Expanded on the Basics of HTML",
@@ -149,6 +152,13 @@ messages = []
 message_content = assignment_filter(remove_list, replace_dict, sheet())
 print(message_content)
 
+#Remove before making repository public
+account_sid = 'ACe3a7440701bd6a3bdff8a5df9aa8afc5'
+auth_token = 'ba728f474ed29dbff1a3c48450934cc8'
+
+
+phone_contact_list = ["+18572851771", "+16174178395"]
+
 if __name__ == "__main__":
     gmail_send_message(main(), gmail_list, message_content)
-# commit fix? a
+    Twilio(account_sid, auth_token, phone_contact_list, message_content)
