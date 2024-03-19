@@ -8,8 +8,10 @@ from email.message import EmailMessage
 import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from sheets import sheet, assignment_filter
+from sheets import sheet, assignment_filter, sheet_date
 from Twilio_sms import Twilio
+import datetime
+
 
 # If modifying these scopes, delete the file credentials.json.
 
@@ -149,7 +151,7 @@ replace_dict = {"Go over autograding HTML1": "Learning how to autograde!", "HTML
                 "Show Jack Fede's site with/without CSS https://replit.com/@ericwu/2022jfedeCS2#index.html (uncomment the css link)": "Analyzed an Example Website"}
 
 messages = []
-message_content = assignment_filter(remove_list, replace_dict, sheet())
+message_content = assignment_filter(remove_list, replace_dict, sheet(sheet_date()))
 print(message_content)
 
 #Remove before making repository public
