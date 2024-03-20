@@ -148,7 +148,7 @@ remove_list = ["Headers", "Paragraphs", "Ordered lists", "Unordered lists", "Goo
 replace_dict = {"Go over autograding HTML1": "Learning how to autograde!", "HTML1": "we learned hmtl!",
                 "Introductions (names)": "Introductions, Icebreakers, Logistics",
                 "blockquote": "Learned How to Autograde and Expanded on the Basics of HTML",
-                "Show Jack Fede's site with/without CSS https://replit.com/@ericwu/2022jfedeCS2#index.html (uncomment the css link)": "Analyzed an Example Website", "Embedded PE day 1": "Embedded PE"}
+                "Show Jack Fede's site with/without CSS https://replit.com/@ericwu/2022jfedeCS2#index.html (uncomment the css link)": "Analyzed an Example Website", "Gym": "embedded gym class"}
 
 messages = []
 message_content = assignment_filter(remove_list, replace_dict, sheet(sheet_date()))
@@ -158,9 +158,19 @@ print(message_content)
 account_sid = 'ACe3a7440701bd6a3bdff8a5df9aa8afc5'
 auth_token = 'ba728f474ed29dbff1a3c48450934cc8'
 
+def reFormat_phone():
+    with open("phone_numbers.txt") as file:
+        lines = file.readlines()
+        for i in range(2):
+            lines[i] = lines[i].strip()
+            # lines.replace(i, i.strip())
+        return lines
 
-phone_contact_list = ["+18572851771", "+16174178395"]
+
+# list of emails that are recieving notifications
+phone_list = reFormat_phone()
+
 
 if __name__ == "__main__":
     gmail_send_message(main(), gmail_list, message_content)
-    Twilio(account_sid, auth_token, phone_contact_list, message_content)
+    Twilio(account_sid, auth_token, phone_list, message_content)
