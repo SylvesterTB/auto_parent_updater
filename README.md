@@ -10,3 +10,4 @@
 ## User Guide
 
 - Requirements: Assigned to Kron as a Job, Twilio auth tokens, Aspen teacher access, filter dictionaries
+- pip install requirements.txt for required packages

@@ -142,13 +142,13 @@ remove_list = ["Headers", "Paragraphs", "Ordered lists", "Unordered lists", "Goo
                "Day 1 survey", "Course contract Acknowledgement", "HTML2", "Line break",
                "Story of self + I want my teacher to know", "Go over autograding HTML1", "Section break", "strong",
                "em", "How to look something up", "Boilerplate", "Emojis", "Background color", "Font size", "Font color",
-               "Font family", "CSS1"]
+               "Font family", "CSS1", "Embedded PE"]
 
 # Every key in replaced_dict is replaced with its value
 replace_dict = {"Go over autograding HTML1": "Learning how to autograde!", "HTML1": "we learned hmtl!",
                 "Introductions (names)": "Introductions, Icebreakers, Logistics",
                 "blockquote": "Learned How to Autograde and Expanded on the Basics of HTML",
-                "Show Jack Fede's site with/without CSS https://replit.com/@ericwu/2022jfedeCS2#index.html (uncomment the css link)": "Analyzed an Example Website"}
+                "Show Jack Fede's site with/without CSS https://replit.com/@ericwu/2022jfedeCS2#index.html (uncomment the css link)": "Analyzed an Example Website", "Embedded PE day 1": "Embedded PE"}
 
 messages = []
 message_content = assignment_filter(remove_list, replace_dict, sheet(sheet_date()))

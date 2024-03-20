@@ -118,6 +118,7 @@ def sheet_date():
     except HttpError as err:
         print(err)
 
+# Checks through both the list containing assignments to be removed and the dictionary with assignments to be replaces, and
 def assignment_filter(remove_list, replace_dict, assignment_list):
     txt_string = ' '
     new_list = []
