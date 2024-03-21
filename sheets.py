@@ -13,10 +13,10 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 # The ID and range of a sample spreadsheet.
 SPREADSHEET_ID = "1Pb7mpFLBfpRQo7eOHWnSyq_62Pc5sJPsn3wnuc76vwQ"
-RANGE_NAME = "CS2!A2:E"
 
 
-def sheet(p_start_date):
+
+def sheet(p_start_date, range_name):
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -46,7 +46,7 @@ def sheet(p_start_date):
         sheet = service.spreadsheets()
         result = (
             sheet.values()
-            .get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME)
+            .get(spreadsheetId=SPREADSHEET_ID, range=range_name)
             .execute()
         )
         values = result.get("values", [])
@@ -67,7 +67,7 @@ def sheet(p_start_date):
         print(err)
     # print (potential_message)
 
-def sheet_date():
+def sheet_date(range_name):
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
@@ -97,7 +97,7 @@ def sheet_date():
         sheet = service.spreadsheets()
         result = (
             sheet.values()
-            .get(spreadsheetId= SPREADSHEET_ID, range=RANGE_NAME)
+            .get(spreadsheetId= SPREADSHEET_ID, range=range_name)
             .execute()
         )
         values = result.get("values", [])

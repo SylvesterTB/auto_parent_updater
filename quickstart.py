@@ -54,13 +54,7 @@ def main():
         results = service.users().labels().list(userId="me").execute()
         labels = results.get("labels", [])
 
-        if not labels:
-            print("No labels found.")
-            return
-        print("Labels:")
-        for label in labels:
-            print(f'This is label hooray! {label["name"]}')
-        print("I'm done kind person!")
+
     except HttpError as error:
         # TODO(developer) - Handle errors from gmail API.
         print(f"An error occurred: {error}")
@@ -149,9 +143,9 @@ replace_dict = {"Go over autograding HTML1": "Learning how to autograde!", "HTML
                 "Introductions (names)": "Introductions, Icebreakers, Logistics",
                 "blockquote": "Learned How to Autograde and Expanded on the Basics of HTML",
                 "Show Jack Fede's site with/without CSS https://replit.com/@ericwu/2022jfedeCS2#index.html (uncomment the css link)": "Analyzed an Example Website", "work day": "project work"}
-
+RANGE_NAME = "CS2!A2:E"
 messages = []
-message_content = assignment_filter(remove_list, replace_dict, sheet(sheet_date()))
+message_content = assignment_filter(remove_list, replace_dict, sheet(sheet_date(RANGE_NAME), RANGE_NAME))
 print(message_content)
 
 #Remove before making repository public
