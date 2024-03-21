@@ -12,8 +12,8 @@ from date import date
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = "1Pb7mpFLBfpRQo7eOHWnSyq_62Pc5sJPsn3wnuc76vwQ"
-SAMPLE_RANGE_NAME = "CS2!A2:E"
+SPREADSHEET_ID = "1Pb7mpFLBfpRQo7eOHWnSyq_62Pc5sJPsn3wnuc76vwQ"
+RANGE_NAME = "CS2!A2:E"
 
 
 def sheet(p_start_date):
@@ -46,7 +46,7 @@ def sheet(p_start_date):
         sheet = service.spreadsheets()
         result = (
             sheet.values()
-            .get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME)
+            .get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME)
             .execute()
         )
         values = result.get("values", [])
@@ -97,7 +97,7 @@ def sheet_date():
         sheet = service.spreadsheets()
         result = (
             sheet.values()
-            .get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range=SAMPLE_RANGE_NAME)
+            .get(spreadsheetId= SPREADSHEET_ID, range=RANGE_NAME)
             .execute()
         )
         values = result.get("values", [])
@@ -146,24 +146,6 @@ def assignment_filter(remove_list, replace_dict, assignment_list):
             if not delete_flag:
                 new_list.append(new_txt)
             # print(f"New list in progress {new_list}")
+    new_list = list(set(new_list))
     new_list = "Hello parents and caregivers, this an update relating to your students Computer Science 2 course. In the past 2 weeks we did: " + (', '.join(new_list))
     return new_list
-
-# remove_list = ["Headers", "Paragraphs", "Ordered lists", "Unordered lists", "Google classroom setup",
-#                "CS2 Schedule + Calendar", "CRLS Bell Schedule + Year in review", "Lunch times", "Course contract",
-#                "Day 1 survey", "Course contract Acknowledgement", "HTML2", "Line break",
-#                "Story of self + I want my teacher to know", "Go over autograding HTML1", "Section break", "strong",
-#                "em", "How to look something up", "Boilerplate", "Emojis", "Background color", "Font size", "Font color",
-#                "Font family", "CSS1"]
-#
-# replace_dict = {"Go over autograding HTML1": "Learning how to autograde!", "HTML1": "we learned hmtl!",
-#                 "Introductions (names)": "Introductions, Icebreakers, Logistics",
-#                 "blockquote": "Learned How to Autograde and Expanded on the Basics of HTML",
-#                 "Show Jack Fede's site with/without CSS https://replit.com/@ericwu/2022jfedeCS2#index.html (uncomment the css link)": "Analyzed an Example Website"}
-# start_date = sheet_date()
-#
-# assignment_filter(remove_list, replace_dict, sheet(start_date))
-# print(sheet_date())
-# if __name__ == "__main__":
-#     sheet(start_date)
-# commit fix? a

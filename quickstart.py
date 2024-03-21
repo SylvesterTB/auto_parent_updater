@@ -142,21 +142,21 @@ remove_list = ["Headers", "Paragraphs", "Ordered lists", "Unordered lists", "Goo
                "Day 1 survey", "Course contract Acknowledgement", "HTML2", "Line break",
                "Story of self + I want my teacher to know", "Go over autograding HTML1", "Section break", "strong",
                "em", "How to look something up", "Boilerplate", "Emojis", "Background color", "Font size", "Font color",
-               "Font family", "CSS1", "Embedded PE"]
+               "Font family", "CSS1"]
 
 # Every key in replaced_dict is replaced with its value
 replace_dict = {"Go over autograding HTML1": "Learning how to autograde!", "HTML1": "we learned hmtl!",
                 "Introductions (names)": "Introductions, Icebreakers, Logistics",
                 "blockquote": "Learned How to Autograde and Expanded on the Basics of HTML",
-                "Show Jack Fede's site with/without CSS https://replit.com/@ericwu/2022jfedeCS2#index.html (uncomment the css link)": "Analyzed an Example Website", "Gym": "embedded gym class"}
+                "Show Jack Fede's site with/without CSS https://replit.com/@ericwu/2022jfedeCS2#index.html (uncomment the css link)": "Analyzed an Example Website", "work day": "project work"}
 
 messages = []
 message_content = assignment_filter(remove_list, replace_dict, sheet(sheet_date()))
 print(message_content)
 
 #Remove before making repository public
-account_sid = 'ACe3a7440701bd6a3bdff8a5df9aa8afc5'
-auth_token = 'ba728f474ed29dbff1a3c48450934cc8'
+account_sid = ''
+auth_token = ''
 
 def reFormat_phone():
     with open("phone_numbers.txt") as file:
