@@ -119,7 +119,7 @@ def sheet_date(range_name):
         print(err)
 
 # Checks through both the list containing assignments to be removed and the dictionary with assignments to be replaces, and
-def assignment_filter(remove_list, replace_dict, assignment_list):
+def assignment_filter(remove_list, replace_dict, assignment_list, course):
     txt_string = ' '
     new_list = []
 
@@ -147,5 +147,5 @@ def assignment_filter(remove_list, replace_dict, assignment_list):
                 new_list.append(new_txt)
             # print(f"New list in progress {new_list}")
     new_list = list(set(new_list))
-    new_list = "Hello parents and caregivers, this an update relating to your students Computer Science 2 course. In the past 2 weeks we did: " + (', '.join(new_list))
+    new_list = "Hello parents and caregivers, this an update relating to your students "+ course + " course. In the past 2 weeks we did: " + (', '.join(new_list))
     return new_list
