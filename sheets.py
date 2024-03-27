@@ -145,7 +145,7 @@ def assignment_filter(remove_list, replace_dict, assignment_list, course):
                         replace_flag = True
             if not delete_flag:
                 new_list.append(new_txt)
-            # print(f"New list in progress {new_list}")
+    # Prevents duplicates
     new_list = list(set(new_list))
     new_list = "Hello parents and caregivers, this an update relating to your students "+ course + " course. In the past 2 weeks we did: " + (', '.join(new_list))
     return new_list
