@@ -92,11 +92,10 @@ def gmail_send_message(creds, contact_list, p_message_content, course):
         message.set_content(
             p_message_content)
 
-        # message["To"] = "syltester616@gmail.com"
         message["Bcc"] = contact_list
         message["From"] = "syltester616@gmail.com"
         message["Subject"] = "Bi-weekly " + course + " update"
-
+        # print(f"vvv message! {message}")
         # encoded message
         encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
 
@@ -145,9 +144,9 @@ def call_function(p_course):
     return RANGE_NAME, remove_list, replace_dict, class_codes
 
 def reFormat_email(course):
-    with open(course + "_emails") as file:
+    with open(course + "_emails1.txt") as file:
         lines = file.readlines()
-        num_lines = len(lines) - 1
+        num_lines = len(lines)
         for i in range(num_lines):
             lines[i] = lines[i].strip()
             # lines.replace(i, i.strip())
@@ -155,18 +154,18 @@ def reFormat_email(course):
 
 
 def reFormat_phone(course):
-    with open(course + "_phone_numbers") as file:
+    with open(course + "_phone_numbers1.txt") as file:
         lines = file.readlines()
         num_lines = len(lines) - 1
         for i in range(num_lines):
             lines[i] = lines[i].strip()
             # lines.replace(i, i.strip())
         return lines
-current_courses = ["HN Indep Grad Project"]
+current_courses = ["CS3", "CS2"]
 
 account_sid = ''
 auth_token = ''
-print("HN Indep Grad Project", call_function("HN Indep Grad Project")[3])
+# print("HN Indep Grad Project", call_function("HN Indep Grad Project")[3])
 
 
 
@@ -177,7 +176,7 @@ for course in current_courses:
     message_content = assignment_filter(remove_list, replace_dict, sheet(sheet_date(RANGE_NAME), RANGE_NAME),course)
     print(message_content)
 
-    login_aspen('', '')
+    login_aspen('teacher Username', 'Teacher password')
     get_Class_Info(course, call_function(course)[3])
 
     gmail_list = reFormat_email(course)
@@ -185,6 +184,7 @@ for course in current_courses:
 
 
     if __name__ == "__main__":
+        print(message_content)
         gmail_send_message(main(), gmail_list, message_content, course)
         Twilio(account_sid, auth_token, phone_list, message_content)
 
