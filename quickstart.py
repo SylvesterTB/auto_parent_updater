@@ -144,7 +144,7 @@ def call_function(p_course):
     return RANGE_NAME, remove_list, replace_dict, class_codes
 
 def reFormat_email(course):
-    with open(course + "_emails1.txt") as file:
+    with open(course + "_emails") as file:
         lines = file.readlines()
         num_lines = len(lines)
         for i in range(num_lines):
@@ -154,14 +154,14 @@ def reFormat_email(course):
 
 
 def reFormat_phone(course):
-    with open(course + "_phone_numbers1.txt") as file:
+    with open(course + "_phone_numbers") as file:
         lines = file.readlines()
         num_lines = len(lines) - 1
         for i in range(num_lines):
             lines[i] = lines[i].strip()
             # lines.replace(i, i.strip())
         return lines
-current_courses = ["CS3", "CS2"]
+current_courses = []
 
 account_sid = ''
 auth_token = ''
