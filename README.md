@@ -9,5 +9,11 @@
 
 ## User Guide
 
-- Requirements: Assigned to Kron as a Job, Twilio auth tokens, Aspen teacher access, filter dictionaries,a one time input of class code any and all classes (individually) as well as user name and password (all are variables found in the code) to obtain parent emails, phone numbers and student birthdays, all put into text documents labeled for their content.
-- pip install -r .\requirements.txt for required packages
+- fill in remove_list and replace_dict and classcode for each class (quickstart.py 118)
+- input account_sid and auth_token (quickstart.py 166)
+- every slot in the assignments column of the spreadsheet  needs to be filled in. (say work day instead of blank space, etc.)
+- aspen username and password  (quickstart.py 179)
+- program must run (on kron) every two weeks on the last Friday, and must be restarted every semester. 
+- keep Twilio account loaded with credit
+- each semester, input current list of courses you want to run the project for (quickstart.py 164) note: courses must be named how they appear in the schedule spreadsheet
+- install requirements.txt
