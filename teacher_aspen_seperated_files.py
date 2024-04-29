@@ -22,7 +22,7 @@ def click_button(by_value, value_value, wait_time):
             return "dne"
 
     button = (driver.find_element(by=by_value, value=value_value))
-    button.click()
+    button.click()  
     return button
 
 
