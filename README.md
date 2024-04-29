@@ -17,4 +17,4 @@
 - Program must run (on kron) every two weeks on the last Friday, and must be restarted every semester. 
 - Keep Twilio account loaded with credit
 - Each semester, input current list of courses you want to run the project for (quickstart.py 164) note: courses must be named how they appear in the schedule spreadsheet
-- Install requirements.txt       
+- Install requirements.txt          
